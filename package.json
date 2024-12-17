@@ -1,0 +1,31 @@
+{
+  "name": "backend-tecnocontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Franjapx08/backend-tecnocontrol.git"
+  },
+  "keywords": [],
+  "author": "FJAP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Franjapx08/backend-tecnocontrol/issues"
+  },
+  "homepage": "https://github.com/Franjapx08/backend-tecnocontrol#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.5",
+    "xlsx": "^0.18.5"
+  }
+}
