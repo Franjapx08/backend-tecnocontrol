@@ -15,17 +15,20 @@ module.exports = class Units {
                 u.idgps, u.marca, u.modelo, u.placas, u.serie, u.ano, u.color, u.linea, u.nombre_unidad, u.nombre_grupo,
                 IFNULL(ue.start_date, 'No disponible') as ultima_fecha_evento, IFNULL(ue.odometro_kms, 'No disponible') as odometro,
                 IFNULL(ue.ubicacion, 'No disponible') as ubicacion, IFNULL(ue.desc_msg, 'No disponible') as evento,  
-                IFNULL(ue.lat, 'No disponible') as lat, IFNULL(ue.lon, 'No disponible') as lon 
+                IFNULL(ue.lat, 'No disponible') as lat, IFNULL(ue.lon, 'No disponible') as lon,
+                IF(ue.lat, 'activo','inactivo') as estatus 
             FROM units u
             LEFT JOIN unit_events ue
             ON ue.unit_idgps = u.idgps
             WHERE u.deleted_at IS NULL`;
         /* Validar filtros */
         if(filtro != null && filtro.busqueda != null && id == null){
-            query += ` AND marca = '${filtro.busqueda}' OR modelo = '${filtro.busqueda}' OR placas = '${filtro.busqueda}' OR serie = '${filtro.busqueda}'`;
-        }else if(id != null){
+            query += ` AND (idgps = '${filtro.busqueda}' OR marca = '${filtro.busqueda}' OR modelo = '${filtro.busqueda}' OR placas = '${filtro.busqueda}' OR serie = '${filtro.busqueda}')`;
+        }
+        if(id != null){
             query += ` AND idgps = ${id}` 
-        }else if(filtro != null && filtro.start_date != null && filtro.end_date != null){
+        }
+        if(filtro != null && filtro.start_date != null && filtro.end_date != null){
             query += ` AND ue.start_date BETWEEN '${filtro.start_date}' AND '${filtro.end_date}'` 
         }
         /* Limitar resultados */

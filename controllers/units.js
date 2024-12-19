@@ -11,10 +11,127 @@ const { exportReport, formatDate } = require('../helpers');
  * @param {*} res 
  */
 const getAll = async(req, res) => {
-    const { idgps, busqueda } = req.query;
+    const { idgps, busqueda, start_date, end_date, isExportReport } = req.query;
     try {
+        /* Obtener unidades */
         const units = new Units();
-        const result = await units.getUnits(idgps, {busqueda});
+        const resultUnits = await units.getUnits(idgps, {busqueda, start_date, end_date});
+        /* Agregar acciones a resultado */
+        resultUnits.forEach((r, i) => {
+            if(r.estatus == 'activo'){
+                resultUnits[i].actions = [
+                    {
+                        "text": "Editar",
+                        "value": "edit",
+                        "icon": "mdi-eye",
+                        "color": "primary"
+                    }
+                ]
+            }
+        })
+        /* Definir columnas respuesta */
+        let columns = [
+            {
+                key: 'idgps',
+                title: 'IDGPS',
+                type: 'text'
+            },
+            {
+                key: 'marca',
+                title: 'MARCA',
+                type: 'text'
+            },
+            {
+                key: 'modelo',
+                title: 'MODELO',
+                type: 'text'
+            },
+            {
+                key: 'placas',
+                title: 'PLACAS',
+                type: 'text'
+            },
+            {
+                key: 'serie',
+                title: 'SERIE',
+                type: 'text'
+            },
+            {
+                key: 'ano',
+                title: 'ANO',
+                type: 'text'
+            },
+            {
+                key: 'color',
+                title: 'COLOR',
+                type: 'text'
+            },
+            {
+                key: 'linea',
+                title: 'LINEA',
+                type: 'text'
+            },
+            {
+                key: 'nombre_unidad',
+                title: 'NOMBRE_UNIDAD',
+                type: 'text'
+            },
+            {
+                key: 'nombre_grupo',
+                title: 'NOMBRE_GRUPO',
+                type: 'text'
+            },
+            {
+                key: 'ultima_fecha_evento',
+                title: 'ULTIMA_FECHA_EVENTO',
+                type: 'text'
+            },
+            {
+                key: 'odometro',
+                title: 'ODOMETRO',
+                type: 'text'
+            },
+            {
+                key: 'ubicacion',
+                title: 'ULTIMA_UBICACION',
+                type: 'text'
+            },
+            {
+                key: 'evento',
+                title: 'ULTIMO_EVENTO',
+                type: 'text'
+            },
+            {
+                key: 'lat',
+                title: 'LATITUD',
+                type: 'text'
+            },
+            {
+                key: 'lon',
+                title: 'LONGITUD',
+                type: 'text'
+            },
+            {
+                key: "actions",
+                title: "Acciones",
+                type: "action",
+                export: false
+            }
+        ];
+        /* Resultado reporte */
+        if(isExportReport != undefined){
+            /* Mapear información con función */
+            const exportData = await exportReport('units', columns, resultUnits);
+            /* Exportar reporte */
+            return res.download(exportData);
+        }
+        /* Resultado estructura tabla */
+        const result = {
+            title: 'Unidades',
+            columns: columns,
+            rows: resultUnits
+        };
+        /* Respuesta */
         res.status(200).json({
             code: 200,
             msg: 'Éxito',

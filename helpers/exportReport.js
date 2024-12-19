@@ -52,20 +52,26 @@ const exportReport = async (filename, columns, rows, fileType = 'csv') => {
                  * Ademas validamos el valor de la propiedad en la fila actual
                  * para la llave de la columna que se esta iterando.
                  */
-                if (columns[keyCol].type == 'text' ) {
-                    newObj[columns[keyCol].name] = (obj[columns[keyCol].name] === null || obj[columns[keyCol].name] === undefined) ? '' : obj[columns[keyCol].name];
-                } else {
-                    newObj[columns[keyCol].name] = (obj[columns[keyCol].name] === null || obj[columns[keyCol].name] === undefined || obj[columns[keyCol].name].name === undefined || obj[columns[keyCol].name].name === null) ? '' : obj[columns[keyCol].name].name.trim().replace(/(<([^>]+)>)/ig, '');
-                } 
-                if ( columns[keyCol].esNumero !== undefined && columns[keyCol].esNumero == true && !isNaN(newObj[columns[keyCol].name]) && obj[columns[keyCol].name] !== undefined ) {
-                    newObj[columns[keyCol].name] = parseFloat(newObj[columns[keyCol].name]);
+                if(columns[keyCol].export == undefined){
+                    if (columns[keyCol].type == 'text' ) {
+                        newObj[columns[keyCol].key] = (obj[columns[keyCol].key] === null || obj[columns[keyCol].key] === undefined) ? '' : obj[columns[keyCol].key];
+                    } else {
+                        newObj[columns[keyCol].key] = (obj[columns[keyCol].key] === null || obj[columns[keyCol].key] === undefined || obj[columns[keyCol].key].key === undefined || obj[columns[keyCol].key].key === null) ? '' : obj[columns[keyCol].key].key.trim().replace(/(<([^>]+)>)/ig, '');
+                    } 
+                    if ( columns[keyCol].esNumero !== undefined && columns[keyCol].esNumero == true && !isNaN(newObj[columns[keyCol].key]) && obj[columns[keyCol].key] !== undefined ) {
+                        newObj[columns[keyCol].key] = parseFloat(newObj[columns[keyCol].key]);
+                    }
                 }
             }
             return newObj;
         }); // end map de rows         
           
         /* Definir cabecera. */
-        const columnsTitles = columns.map(el => el.title);
+        const columnsTitles = columns.map(el => {
+            if(el.export == undefined){
+                return el.title
+            }
+        });
         
         let workSheet = xlsx.utils.json_to_sheet(rows);
         /* Sobrescribir la cabecera. */
