@@ -4,7 +4,6 @@ const { createServer } = require('http');
 const { db } = require('../database/config');
 const cors = require('cors')
 
-
 class Server {
     constructor(){
       this.app = express();

@@ -20,6 +20,12 @@ module.exports = class Units {
             FROM units u
             LEFT JOIN unit_events ue
             ON ue.unit_idgps = u.idgps
+            AND ue.id = 
+            (
+                SELECT MAX(id) 
+                FROM unit_events e
+                WHERE e.unit_idgps = ue.unit_idgps
+            )
             WHERE u.deleted_at IS NULL`;
         /* Validar filtros */
         if(filtro != null && filtro.busqueda != null && id == null){

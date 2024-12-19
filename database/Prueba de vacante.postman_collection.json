@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "d6acaf63-d650-4d39-990d-8dc72434c9e5",
+		"name": "Prueba de vacante",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13420614"
+	},
+	"item": [
+		{
+			"name": "API tecnocontrol",
+			"item": [
+				{
+					"name": "Unidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Tcv-Client-Id",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.tcvsat.com.mx/tcvback/v3/api/units",
+							"protocol": "https",
+							"host": [
+								"www",
+								"tcvsat",
+								"com",
+								"mx"
+							],
+							"path": [
+								"tcvback",
+								"v3",
+								"api",
+								"units"
+							],
+							"query": [
+								{
+									"key": "idgps",
+									"value": "23945",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eventos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Tcv-Client-Id",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "idgps",
+									"value": "23945",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.tcvsat.com.mx/tcvback/v3/api/events?dtini=2024-12-17 14:12:15&dtfin=2024-12-17 14:17:15&idgps=20575",
+							"protocol": "https",
+							"host": [
+								"www",
+								"tcvsat",
+								"com",
+								"mx"
+							],
+							"path": [
+								"tcvback",
+								"v3",
+								"api",
+								"events"
+							],
+							"query": [
+								{
+									"key": "dtini",
+									"value": "2024-12-17 14:12:15"
+								},
+								{
+									"key": "dtfin",
+									"value": "2024-12-17 14:17:15"
+								},
+								{
+									"key": "idgps",
+									"value": "20575"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ultimo evento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Tcv-Client-Id",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.tcvsat.com.mx/tcvback/v3/api/ultimoEvent?idgps=20737",
+							"protocol": "https",
+							"host": [
+								"www",
+								"tcvsat",
+								"com",
+								"mx"
+							],
+							"path": [
+								"tcvback",
+								"v3",
+								"api",
+								"ultimoEvent"
+							],
+							"query": [
+								{
+									"key": "idgps",
+									"value": "20737"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidades",
+			"item": [
+				{
+					"name": "Obtener unidades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostLocal}}api/units",
+							"host": [
+								"{{hostLocal}}api"
+							],
+							"path": [
+								"units"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "33509",
+									"description": "Busqueda por, idgps, marca, modelo, placas, serie",
+									"disabled": true
+								},
+								{
+									"key": "idgps",
+									"value": "6448",
+									"description": "Identificador gps",
+									"disabled": true
+								},
+								{
+									"key": "start_date",
+									"value": "2024-12-16",
+									"description": "Fecha inicio",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-20",
+									"description": "Fecha fin",
+									"disabled": true
+								},
+								{
+									"key": "isExportReport",
+									"value": "true",
+									"description": "Indicador para exportar",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener unidades by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostLocal}}api/units/23945",
+							"host": [
+								"{{hostLocal}}api"
+							],
+							"path": [
+								"units",
+								"23945"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear unidades",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idgps\": \"123\",\n    \"marca\": \"HONDA\",\n    \"modelo\": \"123\",\n    \"placas\": \"HONDA\",\n    \"serie\": \"123\",\n    \"ano\": \"HONDA\",\n    \"color\": \"HONDA\",\n    \"linea\": \"HONDA\",\n    \"nombre_unidad\": \"HONDA\",\n    \"nombre_grupo\": \"HONDA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostLocal}}api/units",
+							"host": [
+								"{{hostLocal}}api"
+							],
+							"path": [
+								"units"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Importar unidades de API tecnocontrol",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostLocal}}api/units/import",
+							"host": [
+								"{{hostLocal}}api"
+							],
+							"path": [
+								"units",
+								"import"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar unidades reporte",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostLocal}}api/units/report?start_date=2024-12-17&end_date=2024-12-20",
+							"host": [
+								"{{hostLocal}}api"
+							],
+							"path": [
+								"units",
+								"report"
+							],
+							"query": [
+								{
+									"key": "idgps",
+									"value": "33504",
+									"disabled": true
+								},
+								{
+									"key": "busqueda",
+									"value": "HONDA",
+									"description": "Busqueda por, marca, modelo, placas, serie",
+									"disabled": true
+								},
+								{
+									"key": "start_date",
+									"value": "2024-12-17"
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

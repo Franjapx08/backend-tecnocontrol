@@ -21,7 +21,7 @@ const getAll = async(req, res) => {
             if(r.estatus == 'activo'){
                 resultUnits[i].actions = [
                     {
-                        "text": "Editar",
+                        "text": "Ver más",
                         "value": "edit",
                         "icon": "mdi-eye",
                         "color": "primary"
@@ -284,7 +284,6 @@ const importEvents = async(req, res) => {
         var startDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.toLocaleTimeString();
         d.setMinutes(d.getMinutes() + 5);
         var endDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + (d.toLocaleTimeString());
-        console.log(startDate + '  ' + endDate);
         /* Obtener todas las unidades de BD */
         const units = new Units();
         const result = await units.getUnits(null, null, 20);
@@ -295,7 +294,6 @@ const importEvents = async(req, res) => {
             headers: {'Tcv-Client-Id': process.env.TECNOCONTROLPRIVATEKEY, Accept: 'application/json'}
           };
         /* Recorrer unidades para almacenar sus eventos del mes actual */
-        const dataTotal = [];
         result.forEach(async(e, k) => {
             try {
                 /* API eventos Query params para ruta */
